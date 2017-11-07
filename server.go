@@ -30,12 +30,12 @@ type Lectures struct {
 	Type     string      `json:"type"`
 	Title    string      `json:"title"`
 	Category string      `json:"category"`
-	Contents [][]Message `json:"contents"`
+	Contents [][]Content `json:"contents"`
 }
 
-type Message struct {
-	MessageType    string `json:"message-type"`
-	MessagePayload string `json:"message-payload"`
+type Content struct {
+	Type    string `json:"type"`
+	Payload string `json:"payload"`
 }
 
 func getLectures(w rest.ResponseWriter, r *rest.Request) {
@@ -45,44 +45,44 @@ func getLectures(w rest.ResponseWriter, r *rest.Request) {
 			Type:     "table",
 			Title:    "授業情報",
 			Category: "internal",
-			Contents: [][]Message{{
-				Message{
-					MessageType:    "Image",
-					MessagePayload: "/resource/img/noclass.png",
+			Contents: [][]Content{{
+				Content{
+					Type:    "Image",
+					Payload: "/resource/img/noclass.png",
 				},
-				Message{
-					MessageType:    "String",
-					MessagePayload: "3限",
+				Content{
+					Type:    "String",
+					Payload: "3限",
 				},
-				Message{
-					MessageType:    "String",
-					MessagePayload: "総合情報学特論XX",
+				Content{
+					Type:    "String",
+					Payload: "総合情報学特論XX",
 				},
 			},
 				{
-					Message{
-						MessageType:    "Image",
-						MessagePayload: "/resource/img/chenged.png",
+					Content{
+						Type:    "Image",
+						Payload: "/resource/img/chenged.png",
 					},
-					Message{
-						MessageType:    "String",
-						MessagePayload: "4限",
+					Content{
+						Type:    "String",
+						Payload: "4限",
 					},
-					Message{
-						MessageType:    "String",
-						MessagePayload: "総合情報学基礎XV",
+					Content{
+						Type:    "String",
+						Payload: "総合情報学基礎XV",
 					},
-					Message{
-						MessageType:    "String",
-						MessagePayload: "301",
+					Content{
+						Type:    "String",
+						Payload: "301",
 					},
-					Message{
-						MessageType:    "String",
-						MessagePayload: "→",
+					Content{
+						Type:    "String",
+						Payload: "→",
 					},
-					Message{
-						MessageType:    "String",
-						MessagePayload: "405",
+					Content{
+						Type:    "String",
+						Payload: "405",
 					},
 				}},
 		},
