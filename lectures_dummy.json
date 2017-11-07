@@ -1,0 +1,49 @@
+{
+    "version": 0.0,
+    "type": "table",
+    "title": "授業情報",
+    "category": "internal",
+    "contents": 
+    [
+        [
+            {
+                "message-type": "Image", 
+                "message-payload": "/resource/img/noclass.png"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "3限"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "総合情報学特論XX"
+            }
+        ], 
+        [
+            {
+                "message-type": "Image", 
+                "message-payload": "/resource/img/chenged.png"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "4限"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "総合情報学基礎XV"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "301"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "→"
+            },
+            {
+                "message-type": "String",
+                "message-payload": "405"
+            }
+        ]
+    ]
+}
