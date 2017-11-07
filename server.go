@@ -58,33 +58,32 @@ func getLectures(w rest.ResponseWriter, r *rest.Request) {
 					Type:    "String",
 					Payload: "総合情報学特論XX",
 				},
-			},
-				{
-					Content{
-						Type:    "Image",
-						Payload: "/resource/img/chenged.png",
-					},
-					Content{
-						Type:    "String",
-						Payload: "4限",
-					},
-					Content{
-						Type:    "String",
-						Payload: "総合情報学基礎XV",
-					},
-					Content{
-						Type:    "String",
-						Payload: "301",
-					},
-					Content{
-						Type:    "String",
-						Payload: "→",
-					},
-					Content{
-						Type:    "String",
-						Payload: "405",
-					},
-				}},
+			}, {
+				Content{
+					Type:    "Image",
+					Payload: "/resource/img/chenged.png",
+				},
+				Content{
+					Type:    "String",
+					Payload: "4限",
+				},
+				Content{
+					Type:    "String",
+					Payload: "総合情報学基礎XV",
+				},
+				Content{
+					Type:    "String",
+					Payload: "301",
+				},
+				Content{
+					Type:    "String",
+					Payload: "→",
+				},
+				Content{
+					Type:    "String",
+					Payload: "405",
+				},
+			}},
 		},
 	)
 }
