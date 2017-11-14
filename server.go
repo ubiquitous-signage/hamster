@@ -10,6 +10,7 @@ import (
 	"github.com/ubiquitous-signage/hamster/portal"
 	"github.com/ubiquitous-signage/hamster/schedules"
 	"github.com/ubiquitous-signage/hamster/trains"
+	"github.com/ubiquitous-signage/hamster/weather"
 )
 
 func main() {
@@ -25,6 +26,7 @@ func main() {
 		rest.Get("/trains", trains.GetTrains),
 		rest.Get("/portal", portal.GetPortal),
 		rest.Get("/newsletters", newsletters.GetNewsletters),
+		rest.Get("/weather", weather.GetWeather),
 	)
 
 	if err != nil {
