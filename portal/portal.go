@@ -1,14 +1,14 @@
-package potal
+package portal
 
 import (
 	"github.com/ant0ine/go-json-rest/rest"
 )
 
-type Potal struct {
-	Version  float64 `json:"version"`
-	Type     string  `json:"type"`
-	Title    string  `json:"title"`
-	Category string  `json:"category"`
+type Portal struct {
+	Version  float64     `json:"version"`
+	Type     string      `json:"type"`
+	Title    string      `json:"title"`
+	Category string      `json:"category"`
 	Contents [][]Content `json:"contents"`
 }
 
@@ -17,10 +17,9 @@ type Content struct {
 	Payload string `json:"payload"`
 }
 
-
-func GetPotal(w rest.ResponseWriter, r *rest.Request) {
+func GetPortal(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(
-		Potal{
+		Portal{
 			Version:  0.0,
 			Type:     "table",
 			Title:    "学府ポータル",
