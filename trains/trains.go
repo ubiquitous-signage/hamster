@@ -1,14 +1,14 @@
-package train
+package trains
 
 import (
 	"github.com/ant0ine/go-json-rest/rest"
 )
 
-type Train struct {
-	Version  float64 `json:"version"`
-	Type     string  `json:"type"`
-	Title    string  `json:"title"`
-	Category string  `json:"category"`
+type Trains struct {
+	Version  float64     `json:"version"`
+	Type     string      `json:"type"`
+	Title    string      `json:"title"`
+	Category string      `json:"category"`
 	Contents [][]Content `json:"contents"`
 }
 
@@ -17,10 +17,9 @@ type Content struct {
 	Payload string `json:"payload"`
 }
 
-
-func GetTrain(w rest.ResponseWriter, r *rest.Request) {
+func GetTrains(w rest.ResponseWriter, r *rest.Request) {
 	w.WriteJson(
-		Train{
+		Trains{
 			Version:  0.0,
 			Type:     "table",
 			Title:    "運行情報",

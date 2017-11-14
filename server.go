@@ -9,7 +9,7 @@ import (
 	"github.com/ubiquitous-signage/hamster/newsletters"
 	"github.com/ubiquitous-signage/hamster/portal"
 	"github.com/ubiquitous-signage/hamster/schedules"
-	"github.com/ubiquitous-signage/hamster/train"
+	"github.com/ubiquitous-signage/hamster/trains"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func main() {
 		}),
 		rest.Get("/lectures", lectures.GetLectures),
 		rest.Get("/schedules", schedules.GetSchedules),
-		rest.Get("/train", train.GetTrain),
+		rest.Get("/trains", trains.GetTrains),
 		rest.Get("/portal", portal.GetPortal),
 		rest.Get("/newsletters", newsletters.GetNewsletters),
 	)
