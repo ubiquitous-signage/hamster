@@ -15,3 +15,7 @@
 .glide/
 
 vendor/
+
+
+# credential
+tokyometroToken.go
