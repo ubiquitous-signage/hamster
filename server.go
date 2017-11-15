@@ -20,11 +20,11 @@ func main() {
 		OriginValidator: func(origin string, request *rest.Request) bool {
             return origin == "http://localhost:8080"
         },
-   RejectNonCorsRequests: false,
-	 AllowedMethods: []string{"GET", "POST", "PUT"},
-	 AllowedHeaders: []string{"Accept","Authorization", "content-type", "X-Custom-Header", "Origin"},
-	 AccessControlAllowCredentials: true,
- })
+   		RejectNonCorsRequests: false,
+	 	AllowedMethods: []string{"GET", "POST", "PUT"},
+	 	AllowedHeaders: []string{"Accept","Authorization", "content-type", "X-Custom-Header", "Origin"},
+		AccessControlAllowCredentials: true,
+ 	})
 
 	router, err := rest.MakeRouter(
 		rest.Get("/ok", func(w rest.ResponseWriter, r *rest.Request) {
@@ -42,5 +42,10 @@ func main() {
 		log.Fatal(err)
 	}
 	api.SetApp(router)
-	log.Fatal(http.ListenAndServe(":9000", api.MakeHandler()))
+
+	http.Handle("/api/", http.StripPrefix("/api", api.MakeHandler()))
+
+	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./static"))))
+
+	log.Fatal(http.ListenAndServe(":9000", nil))
 }
