@@ -15,6 +15,15 @@ import (
 func main() {
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
+	api.Use(&rest.CorsMiddleware{
+		OriginValidator: func(origin string, request *rest.Request) bool {
+            return origin == "http://localhost:8080"
+        },
+   RejectNonCorsRequests: false,
+	 AllowedMethods: []string{"GET", "POST", "PUT"},
+	 AllowedHeaders: []string{"Accept","Authorization", "content-type", "X-Custom-Header", "Origin"},
+	 AccessControlAllowCredentials: true,
+ })
 
 	router, err := rest.MakeRouter(
 		rest.Get("/ok", func(w rest.ResponseWriter, r *rest.Request) {
