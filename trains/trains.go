@@ -27,7 +27,7 @@ func GetTrains(w rest.ResponseWriter, r *rest.Request) {
 			Contents: [][]Content{{
 				Content{
 					Type:    "Image",
-					Payload: "/resource/img/marunouchi.png",
+					Payload: "/static/images/metro/M.jpg",
 				},
 				Content{
 					Type:    "String",
@@ -36,7 +36,7 @@ func GetTrains(w rest.ResponseWriter, r *rest.Request) {
 			}, {
 				Content{
 					Type:    "Image",
-					Payload: "/resource/img/chiyoda.png",
+					Payload: "/static/images/metro/C.jpg",
 				},
 				Content{
 					Type:    "String",
