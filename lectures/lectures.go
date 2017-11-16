@@ -40,7 +40,7 @@ func GetLectures(w rest.ResponseWriter, r *rest.Request) {
 			}, {
 				Content{
 					Type:    "Image",
-					Payload: "/static/images/lectures/chenged.png",
+					Payload: "/static/images/lectures/changed.png",
 				},
 				Content{
 					Type:    "String",
