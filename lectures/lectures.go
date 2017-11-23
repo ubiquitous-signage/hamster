@@ -1,7 +1,7 @@
 package lectures
 
 import (
-	"fmt"
+	"log"
 	"time"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
@@ -18,7 +18,7 @@ func Run() {
 	c := mongoSession.DB("ubiquitous-signage").C("panels")
 
 	for {
-		fmt.Println("Upsert lectures")
+		log.Println("Upsert lectures")
 		c.Upsert(
 			bson.M{
 				"version":  0.0,

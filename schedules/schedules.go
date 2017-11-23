@@ -1,49 +1,60 @@
 package schedules
 
 import (
-	"github.com/ant0ine/go-json-rest/rest"
+	"log"
+	"time"
+	"github.com/ubiquitous-signage/hamster/panel"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
-type Schedules struct {
-	Version  float64 `json:"version"`
-	Type     string  `json:"type"`
-	Title    string  `json:"title"`
-	Category string  `json:"category"`
-	Contents [][]Content `json:"contents"`
-}
+func Run() {
+	mongoSession, err := mgo.Dial("localhost:27017")
+	if err != nil {
+		panic(err)
+	}
+	defer mongoSession.Close()
 
-type Content struct {
-	Type    string `json:"type"`
-	Payload string `json:"payload"`
-}
+	c := mongoSession.DB("ubiquitous-signage").C("panels")
 
-
-func GetSchedules(w rest.ResponseWriter, r *rest.Request) {
-	w.WriteJson(
-		Schedules{
-			Version:  0.0,
-			Type:     "table",
-			Title:    "本日の予定",
-			Category: "internal",
-			Contents: [][]Content{{
-				Content{
-					Type:    "String",
-					Payload: "13:00",
+	for {
+		log.Println("Upsert schedules")
+		c.Upsert(
+			bson.M{
+				"version":  0.0,
+				"type":     "table",
+				"title":    "本日の予定",
+				"category": "internal", 
+			}, 
+			panel.Panel{
+				PanelHeader: panel.PanelHeader{
+					Version:  0.0,
+					Type:     "table",
+					Title:    "本日の予定",
+					Category: "internal",
+					Date:     time.Now(),
 				},
-				Content{
-					Type:    "String",
-					Payload: "T-Kernel講習会",
-				},
-			}, {
-				Content{
-					Type:    "String",
-					Payload: "16:00",
-				},
-				Content{
-					Type:    "String",
-					Payload: "〇〇先生講演会",
-				},
-			}},
-		},
-	)
+				Contents: [][]panel.Content{{
+					panel.Content{
+						Type:    "String",
+						Payload: "13:00",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "T-Kernel講習会",
+					},
+				}, {
+					panel.Content{
+						Type:    "String",
+						Payload: "16:00",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "〇〇先生講演会",
+					},
+				}},
+			},
+		)
+		time.Sleep(2 * time.Second)
+	}
 }
