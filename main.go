@@ -19,6 +19,6 @@ func main() {
 	go schedules.Run()
 	go trains.Run()
 	for {
-		time.Sleep(5000);
+		time.Sleep(1 * time.Second);
 	}
 }
