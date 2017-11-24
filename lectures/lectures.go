@@ -1,68 +1,80 @@
 package lectures
 
 import (
-	"github.com/ant0ine/go-json-rest/rest"
+	"log"
+	"time"
+	"github.com/ubiquitous-signage/hamster/panel"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
-type Lectures struct {
-	Version  float64     `json:"version"`
-	Type     string      `json:"type"`
-	Title    string      `json:"title"`
-	Category string      `json:"category"`
-	Contents [][]Content `json:"contents"`
-}
+func Run() {
+	mongoSession, err := mgo.Dial("localhost:27017")
+	if err != nil {
+		panic(err)
+	}
+	defer mongoSession.Close()
 
-type Content struct {
-	Type    string `json:"type"`
-	Payload string `json:"payload"`
-}
+	c := mongoSession.DB("ubiquitous-signage").C("panels")
 
-func GetLectures(w rest.ResponseWriter, r *rest.Request) {
-	w.WriteJson(
-		Lectures{
-			Version:  0.0,
-			Type:     "table",
-			Title:    "授業情報",
-			Category: "internal",
-			Contents: [][]Content{{
-				Content{
-					Type:    "Image",
-					Payload: "/static/images/lectures/noclass.png",
+	for {
+		log.Println("Upsert lectures")
+		c.Upsert(
+			bson.M{
+				"version":  0.0,
+				"type":     "table",
+				"title":    "授業情報",
+				"category": "internal", 
+			}, 
+			panel.Panel{
+				PanelHeader: panel.PanelHeader {
+					Version:  0.0,
+					Type:     "table",
+					Title:    "授業情報",
+					Category: "internal",
+					Date:     time.Now(),
 				},
-				Content{
-					Type:    "String",
-					Payload: "3限",
-				},
-				Content{
-					Type:    "String",
-					Payload: "総合情報学特論XX",
-				},
-			}, {
-				Content{
-					Type:    "Image",
-					Payload: "/static/images/lectures/changed.png",
-				},
-				Content{
-					Type:    "String",
-					Payload: "4限",
-				},
-				Content{
-					Type:    "String",
-					Payload: "総合情報学基礎XV",
-				},
-				Content{
-					Type:    "String",
-					Payload: "301",
-				},
-				Content{
-					Type:    "String",
-					Payload: "→",
-				},
-				Content{
-					Type:    "String",
-					Payload: "405",
-				},
-			}},
-		},
-	)
+				Contents: [][]panel.Content{{
+					panel.Content{
+						Type:    "Image",
+						Payload: "/static/images/lectures/noclass.png",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "3限",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "総合情報学特論XX",
+					},
+				}, {
+					panel.Content{
+						Type:    "Image",
+						Payload: "/static/images/lectures/changed.png",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "4限",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "総合情報学基礎XV",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "301",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "→",
+					},
+					panel.Content{
+						Type:    "String",
+						Payload: "405",
+					},
+				}},
+			},
+		)
+		time.Sleep(2 * time.Second)
+	}
 }

@@ -1,40 +1,52 @@
 package portal
 
 import (
-	"github.com/ant0ine/go-json-rest/rest"
+	"log"
+	"time"
+	"github.com/ubiquitous-signage/hamster/panel"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
-type Portal struct {
-	Version  float64     `json:"version"`
-	Type     string      `json:"type"`
-	Title    string      `json:"title"`
-	Category string      `json:"category"`
-	Contents [][]Content `json:"contents"`
-}
+func Run() {
+	mongoSession, err := mgo.Dial("localhost:27017")
+	if err != nil {
+		panic(err)
+	}
+	defer mongoSession.Close()
 
-type Content struct {
-	Type    string `json:"type"`
-	Payload string `json:"payload"`
-}
+	c := mongoSession.DB("ubiquitous-signage").C("panels")
 
-func GetPortal(w rest.ResponseWriter, r *rest.Request) {
-	w.WriteJson(
-		Portal{
-			Version:  0.0,
-			Type:     "table",
-			Title:    "学府ポータル",
-			Category: "internal",
-			Contents: [][]Content{{
-				Content{
-					Type:    "String",
-					Payload: "研究計画書の提出について",
+	for {
+		log.Println("Upsert portal")
+		c.Upsert(
+			bson.M{
+				"version":  0.0,
+				"type":     "table",
+				"title":    "学府ポータル",
+				"category": "internal", 
+			}, 
+			panel.Panel{
+				PanelHeader: panel.PanelHeader {
+					Version:  0.0,
+					Type:     "table",
+					Title:    "学府ポータル",
+					Category: "internal",
+					Date:     time.Now(),
 				},
-			}, {
-				Content{
-					Type:    "String",
-					Payload: "博士コロキウムの実施について",
-				},
-			}},
-		},
-	)
+				Contents: [][]panel.Content{{
+					panel.Content{
+						Type:    "String",
+						Payload: "研究計画書の提出について",
+					},
+				}, {
+					panel.Content{
+						Type:    "String",
+						Payload: "博士コロキウムの実施について",
+					},
+				}},
+			},
+		)
+		time.Sleep(2 * time.Second)
+	}
 }
