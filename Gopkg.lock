@@ -7,9 +7,15 @@
   revision = "ce4b71cdf7ba29ef443d704bd923f5bbf281ee30"
   version = "v3.3.2"
 
+[[projects]]
+  branch = "v2"
+  name = "gopkg.in/mgo.v2"
+  packages = [".","bson","internal/json","internal/sasl","internal/scram"]
+  revision = "3f83fa5005286a7fe593b055f0d7771a7dce4655"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "41e7f107183c8b8f8aa0cc9855a89de82f89297414f706082ca681abd5f855eb"
+  inputs-digest = "60f59d9dfdbe4d0e232f699f5595e945e1fbfc388e67d6a435c9bad53494f7ff"
   solver-name = "gps-cdcl"
   solver-version = 1
