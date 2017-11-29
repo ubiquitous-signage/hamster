@@ -30,7 +30,7 @@ func Run() {
 	})
 
 	// 言語設定初期化
-	mongoSession.DB("ubiquitous-signage").C("contexts").Insert(bson.M{"lang": "ja"})
+	mongoSession.DB("ubiquitous-signage").C("contexts").Upsert(bson.M{"id": 0}, bson.M{"id": 0, "lang": "ja"})
 
 	router, err := rest.MakeRouter(
 		rest.Get("/panels", func(w rest.ResponseWriter, r *rest.Request) {
