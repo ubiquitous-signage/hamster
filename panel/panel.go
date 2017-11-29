@@ -23,7 +23,7 @@ type ImageContent struct {
 }
 
 func NewImageContent(payload string) *ImageContent {
-	return &ImageContent{Type: "String", Payload: payload}
+	return &ImageContent{Type: "Image", Payload: payload}
 }
 
 type StringContent struct {
