@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -31,7 +32,7 @@ func Run() {
 				PanelHeader: panel.PanelHeader{
 					Version:  0.0,
 					Type:     "table",
-					Title:    *panel.NewMultiLanguageString("本日の予定"),
+					Title:    *multiLanguageString.NewMultiLanguageString("本日の予定"),
 					Category: "internal",
 					Date:     time.Now(),
 				},

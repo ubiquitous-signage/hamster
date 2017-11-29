@@ -2,6 +2,8 @@ package panel
 
 import (
 	"time"
+
+	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 )
 
 type Panel struct {
@@ -10,11 +12,11 @@ type Panel struct {
 }
 
 type PanelHeader struct {
-	Version  float64             `json:"version"`
-	Type     string              `json:"type"`
-	Title    MultiLanguageString `json:"title"`
-	Category string              `json:"category"`
-	Date     time.Time           `json:"date"`
+	Version  float64                                 `json:"version"`
+	Type     string                                  `json:"type"`
+	Title    multiLanguageString.MultiLanguageString `json:"title"`
+	Category string                                  `json:"category"`
+	Date     time.Time                               `json:"date"`
 }
 
 type ImageContent struct {
@@ -27,23 +29,10 @@ func NewImageContent(payload string) *ImageContent {
 }
 
 type StringContent struct {
-	Type    string              `json:"type"`
-	Payload MultiLanguageString `json:"payload"`
+	Type    string                                  `json:"type"`
+	Payload multiLanguageString.MultiLanguageString `json:"payload"`
 }
 
 func NewStringContent(japanese string) *StringContent {
-	return &StringContent{Type: "String", Payload: *NewMultiLanguageString(japanese)}
-}
-
-func NewMultiLanguageString(japanese string) *MultiLanguageString {
-	return &MultiLanguageString{Ja: japanese}
-}
-
-type MultiLanguageString struct {
-	Ja string `json:"ja"`
-	En string `json:"en"`
-	Fr string `json:"fr"`
-	Ru string `json:"ru"`
-	Zh string `json:"zh"`
-	Ko string `json:"ko"`
+	return &StringContent{Type: "String", Payload: *multiLanguageString.NewMultiLanguageString(japanese)}
 }

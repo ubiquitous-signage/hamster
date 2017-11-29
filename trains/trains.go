@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -66,7 +67,7 @@ func fetch() (panel.Panel, error) {
 	}
 	trains.Version = 0.0
 	trains.Type = "table"
-	trains.Title = *panel.NewMultiLanguageString("東京メトロ運行情報")
+	trains.Title = *multiLanguageString.NewMultiLanguageString("東京メトロ運行情報")
 	trains.Category = "external"
 	trains.Date = time.Now()
 	for _, line := range trainInfomation {
