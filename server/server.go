@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/ant0ine/go-json-rest/rest"
+	"github.com/ubiquitous-signage/hamster/ads"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -47,6 +48,7 @@ func Run() {
 			c.Find(nil).One(&result)
 			w.WriteJson(result)
 		}),
+		rest.Post("/ads", ads.PostAd),
 	)
 
 	if err != nil {
