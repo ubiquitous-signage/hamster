@@ -3,6 +3,7 @@ package lectures
 import (
 	"log"
 	"time"
+
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -23,55 +24,28 @@ func Run() {
 			bson.M{
 				"version":  0.0,
 				"type":     "table",
-				"title":    "授業情報",
-				"category": "internal", 
-			}, 
+				"title.ja": "授業情報",
+				"category": "internal",
+			},
 			panel.Panel{
-				PanelHeader: panel.PanelHeader {
+				PanelHeader: panel.PanelHeader{
 					Version:  0.0,
 					Type:     "table",
-					Title:    "授業情報",
+					Title:    *panel.NewMultiLanguageString("授業情報"),
 					Category: "internal",
 					Date:     time.Now(),
 				},
-				Contents: [][]panel.Content{{
-					panel.Content{
-						Type:    "Image",
-						Payload: "/static/images/lectures/noclass.png",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "3限",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "総合情報学特論XX",
-					},
+				Contents: [][]interface{}{{
+					*panel.NewImageContent("/static/images/lectures/noclass.png"),
+					*panel.NewStringContent("3限"),
+					*panel.NewStringContent("総合情報学特論XX"),
 				}, {
-					panel.Content{
-						Type:    "Image",
-						Payload: "/static/images/lectures/changed.png",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "4限",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "総合情報学基礎XV",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "301",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "→",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "405",
-					},
+					*panel.NewImageContent("/static/images/lectures/changed.png"),
+					*panel.NewStringContent("4限"),
+					*panel.NewStringContent("総合情報学基礎XV"),
+					*panel.NewStringContent("301"),
+					*panel.NewStringContent("→"),
+					*panel.NewStringContent("405"),
 				}},
 			},
 		)

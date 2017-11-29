@@ -3,6 +3,7 @@ package schedules
 import (
 	"log"
 	"time"
+
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -23,35 +24,23 @@ func Run() {
 			bson.M{
 				"version":  0.0,
 				"type":     "table",
-				"title":    "本日の予定",
-				"category": "internal", 
-			}, 
+				"title.ja": "本日の予定",
+				"category": "internal",
+			},
 			panel.Panel{
 				PanelHeader: panel.PanelHeader{
 					Version:  0.0,
 					Type:     "table",
-					Title:    "本日の予定",
+					Title:    *panel.NewMultiLanguageString("本日の予定"),
 					Category: "internal",
 					Date:     time.Now(),
 				},
-				Contents: [][]panel.Content{{
-					panel.Content{
-						Type:    "String",
-						Payload: "13:00",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "T-Kernel講習会",
-					},
+				Contents: [][]interface{}{{
+					*panel.NewStringContent("13:00"),
+					*panel.NewStringContent("T-Kernel講習会"),
 				}, {
-					panel.Content{
-						Type:    "String",
-						Payload: "16:00",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "〇〇先生講演会",
-					},
+					*panel.NewStringContent("16:00"),
+					*panel.NewStringContent("〇〇先生講演会"),
 				}},
 			},
 		)
