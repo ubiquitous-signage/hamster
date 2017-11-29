@@ -3,6 +3,8 @@ package newsletters
 import (
 	"log"
 	"time"
+
+	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -23,35 +25,23 @@ func Run() {
 			bson.M{
 				"version":  0.0,
 				"type":     "table",
-				"title":    "研究室情報",
-				"category": "internal", 
-			}, 
+				"title.ja": "研究室情報",
+				"category": "internal",
+			},
 			panel.Panel{
 				PanelHeader: panel.PanelHeader{
 					Version:  0.0,
 					Type:     "table",
-					Title:    "研究室情報",
+					Title:    *multiLanguageString.NewMultiLanguageString("研究室情報"),
 					Category: "internal",
 					Date:     time.Now(),
 				},
-				Contents: [][]panel.Content{{
-					panel.Content{
-						Type:    "String",
-						Payload: "越塚研究室",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "サイネージ運用開始",
-					},
+				Contents: [][]interface{}{{
+					*panel.NewStringContent("越塚研究室"),
+					*panel.NewStringContent("サイネージ運用開始"),
 				}, {
-					panel.Content{
-						Type:    "String",
-						Payload: "暦本研究室",
-					},
-					panel.Content{
-						Type:    "String",
-						Payload: "当研究室D１の〇〇くんが〇〇デザインアワード受賞。",
-					},
+					*panel.NewStringContent("暦本研究室"),
+					*panel.NewStringContent("当研究室D１の〇〇くんが〇〇デザインアワード受賞。"),
 				}},
 			},
 		)
