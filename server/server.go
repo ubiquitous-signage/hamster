@@ -26,7 +26,7 @@ func Run() {
 			return origin == "http://localhost:8080"
 		},
 		RejectNonCorsRequests:         false,
-		AllowedMethods:                []string{"GET"},
+		AllowedMethods:                []string{"GET", "POST"},
 		AllowedHeaders:                []string{"Accept", "Authorization", "content-type", "X-Custom-Header", "Origin"},
 		AccessControlAllowCredentials: true,
 	})
