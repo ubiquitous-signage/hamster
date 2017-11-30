@@ -6,6 +6,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/ubiquitous-signage/hamster/panel"
+	"github.com/ubiquitous-signage/hamster/wordCloud"
 )
 
 func Run() {
@@ -35,6 +36,7 @@ func Run() {
 			
 			w.WriteJson(result)
 		}),
+		rest.Post("/word-cloud", wordCloud.PostWordCloud),
 	)
 
 	if err != nil {
