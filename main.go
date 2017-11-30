@@ -9,7 +9,7 @@ import (
 	"github.com/ubiquitous-signage/hamster/schedules"
 	"github.com/ubiquitous-signage/hamster/server"
 	"github.com/ubiquitous-signage/hamster/trains"
-	// "github.com/ubiquitous-signage/hamster/weather"
+	"github.com/ubiquitous-signage/hamster/weather"
 )
 
 func main() {
@@ -19,6 +19,7 @@ func main() {
 	go portal.Run()
 	go schedules.Run()
 	go trains.Run()
+	go weather.Run()
 	for {
 		time.Sleep(1 * time.Second)
 	}
