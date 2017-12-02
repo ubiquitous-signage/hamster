@@ -97,12 +97,12 @@ func filename(jaName string) (enName string) {
 	switch jaName {
 	case "晴れ":
 		return "hare.png"
-  case "くもり":
-    return "kumori.png"
-  case "雨":
-    return "ame.png"
-  case "雪":
-    return "yuki.png"
+	case "くもり":
+		return "kumori.png"
+	case "雨":
+		return "ame.png"
+	case "雪":
+		return "yuki.png"
 	default:
 		return "noimage.png"
 	}
@@ -156,15 +156,32 @@ func fetch() (panel.Panel, error) {
 	weather.Title = *multiLanguageString.NewMultiLanguageString("東京の天気")
 	weather.Category = "external"
 	weather.Date = time.Now()
+	// for i, line := range neededInfo.TimeSeriesInfo.Items[0].Kind[0].Property.WeatherPart.Weather {
+	// 	symbol := *panel.NewImageContent("/static/images/weather/" + filename(line.Weather))
+	// 	text := *panel.NewStringContent(line.Weather)
+	// 	temp, _ := time.Parse(time.RFC3339, neededInfo.TimeSeriesInfo.TimeDefines.TimeDefine[line.RefID-1].DateTime)
+	// 	date := *panel.NewStringContent(temp.Format("01/02 15:04  "))
+	// 	temperature := *panel.NewStringContent(neededTemp.TimeSeriesInfo.Items[0].Kind[0].Property.TemperaturePart.Temperature[i].Temperature + "℃")
+	// 	contentLine := []interface{}{date, temperature, symbol, text}
+	// 	weather.Contents = append(weather.Contents.([]interface{}), contentLine)
+	// }
+	times := []interface{}{}
+	symbols := []interface{}{}
+	temperatures := []interface{}{}
 	for i, line := range neededInfo.TimeSeriesInfo.Items[0].Kind[0].Property.WeatherPart.Weather {
 		symbol := *panel.NewImageContent("/static/images/weather/" + filename(line.Weather))
-		text := *panel.NewStringContent(line.Weather)
 		temp, _ := time.Parse(time.RFC3339, neededInfo.TimeSeriesInfo.TimeDefines.TimeDefine[line.RefID-1].DateTime)
-		date := *panel.NewStringContent(temp.Format("01/02 15:04  "))
+		timeString := ""
+		if i%2 == 0 {
+			timeString = temp.Format("15:04")
+		}
+		time := *panel.NewStringContent(timeString)
 		temperature := *panel.NewStringContent(neededTemp.TimeSeriesInfo.Items[0].Kind[0].Property.TemperaturePart.Temperature[i].Temperature + "℃")
-		contentLine := []interface{}{date, temperature, symbol, text}
-		weather.Contents = append(weather.Contents.([]interface{}), contentLine)
+		times = append(times, time)
+		symbols = append(symbols, symbol)
+		temperatures = append(temperatures, temperature)
 	}
+	weather.Contents = []interface{}{times, symbols, temperatures}
 	return *weather, nil
 }
 
