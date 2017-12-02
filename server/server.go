@@ -23,7 +23,7 @@ func Run() {
 	api.Use(rest.DefaultDevStack...)
 	api.Use(&rest.CorsMiddleware{
 		OriginValidator: func(origin string, request *rest.Request) bool {
-			return origin == "http://localhost:8080"
+			return origin == "http://localhost:8080" || origin == "http://localhost:8100"
 		},
 		RejectNonCorsRequests:         false,
 		AllowedMethods:                []string{"GET", "POST"},
