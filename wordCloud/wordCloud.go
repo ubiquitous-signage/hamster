@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"time"
-
+	"github.com/spf13/viper"
 	"github.com/ant0ine/go-json-rest/rest"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -93,15 +93,12 @@ func storeWordCloud(newWordCloud WordCloud) {
 		}
 	}
 
-	if len(words) > 40 {
-		log.Println(words)
+	if len(words) > viper.GetInt("WordCloudConfig.thinOutThreshold") {
 		words = words.thinOut(countIsOne)
-		log.Println("words are thinOuted!")
+		log.Println("[Word-cloud] words are thinOuted!")
 	}
 
 	wordCloud.Words = words
-
-	log.Println(words)
 
 	//upsert preparation
 	fixedHeader := map[string]interface{}{
