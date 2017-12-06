@@ -11,7 +11,7 @@ import (
 )
 
 type WordCloud struct {
-	Words           []Word `json:"words"`
+	Words           `json:"words"`
 	WordCloudHeader `bson:",inline"`
 }
 
@@ -20,12 +20,29 @@ type Word struct {
 	Count int
 }
 
+type Words []Word
+
 type WordCloudHeader struct {
 	Version  float64   `json:"version"`
 	Type     string    `json:"type"`
 	Title    string    `json:"title"`
 	Category string    `json:"category"`
 	Date     time.Time `json:"date"`
+}
+
+func (sl Words) thinOut(f func(x Word) bool) []Word {
+	result := make([]Word, 0, len(sl))
+	for _, word := range sl {
+		if !f(word) {
+			word.Count = word.Count - 1
+			result = append(result, word)
+		}
+	}
+	return result
+}
+
+func countIsOne(word Word) bool {
+	return word.Count == 1
 }
 
 func PostWordCloud(w rest.ResponseWriter, r *rest.Request) {
@@ -65,14 +82,6 @@ func storeWordCloud(newWordCloud WordCloud) {
 
 		isEmerged := false
 		for i := 0; i < len(words); i++ {
-			// word := words[i]
-			// if text == word.Text {
-			// 	word.Count = word.Count + 1
-			// 	isEmerged = true
-			// 	break
-			// }
-			// word:= words[i]のwordの参照はwords[i]にはない？
-			// スライスとマップは参照型のはずなのだが
 			if text == words[i].Text {
 				words[i].Count = words[i].Count + 1
 				isEmerged = true
@@ -82,6 +91,12 @@ func storeWordCloud(newWordCloud WordCloud) {
 		if !isEmerged {
 			words = append(words, Word{text, 1})
 		}
+	}
+
+	if len(words) > 40 {
+		log.Println(words)
+		words = words.thinOut(countIsOne)
+		log.Println("words are thinOuted!")
 	}
 
 	wordCloud.Words = words
