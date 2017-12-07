@@ -11,7 +11,7 @@ import (
 )
 
 type WordCloud struct {
-	Words           []Word `json:"words"`
+	Words           []Word `json:"words" bson:"contents"`
 	WordCloudHeader `bson:",inline"`
 }
 
@@ -51,11 +51,11 @@ func storeWordCloud(newWordCloud WordCloud) {
 		panic(err)
 	}
 	defer mgoSession.Close()
-	c := mgoSession.DB("ubiquitous-signage").C("wordCloud")
+	c := mgoSession.DB("ubiquitous-signage").C("panels")
 
 	//update values
 	wordCloud := WordCloud{}
-	c.Find(nil).One(&wordCloud)
+	c.Find(bson.M{"type": "wordCloud"}).One(&wordCloud)
 
 	words := wordCloud.Words
 	newWords := newWordCloud.Words
@@ -93,7 +93,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 		"version":  0.0,
 		"type":     "wordCloud",
 		"title":    "Word Cloud",
-		"category": "external",
+		"category": "wordCloud",
 	}
 	mgoHeader := bson.M(fixedHeader)
 
