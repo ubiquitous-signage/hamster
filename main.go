@@ -10,6 +10,7 @@ import (
 	"github.com/ubiquitous-signage/hamster/server"
 	"github.com/ubiquitous-signage/hamster/trains"
 	"github.com/ubiquitous-signage/hamster/weather"
+	"github.com/ubiquitous-signage/hamster/config"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 	go schedules.Run()
 	go trains.Run()
 	go weather.Run()
+	go config.Run()
 	for {
 		time.Sleep(1 * time.Second)
 	}
