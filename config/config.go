@@ -5,8 +5,14 @@ import (
 	"log"
 )
 
-func Run() {
-	readConfig("wordCloudConfig")
+func Run(env string) {
+	if env == "prod" {
+		readConfig("config.prod")
+		log.Println("starting with prodcution settings...")
+	} else {
+		readConfig("config.dev")
+		log.Println("starting with development settings...")
+	}
 }
 
 func readConfig(fileName string) {
