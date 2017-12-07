@@ -63,10 +63,10 @@ type WordCloudHeader struct {
 }
 */
 
-//http://.../api/labへのpostに対して応答する関数
+//http://.../api/buildingsへのpostに対して応答する関数
 func PostBuildings(w rest.ResponseWriter, r *rest.Request) {
 
-	//研究室から送られてきたものを整形して
+	//研究室から送られてきたものを整形
 	buildingsContents := Contents{}
 	err := r.DecodeJsonPayload(&buildingsContents)
 	if err != nil {
