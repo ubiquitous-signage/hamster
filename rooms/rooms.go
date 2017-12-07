@@ -17,10 +17,10 @@ type Room struct {
 }
 
 type RoomState struct {
-	Name        string `json:"room"`
-	Light       string `json:"light"`
-	Temperature int    `json:"temperature"`
-	Humidity    int    `json:"humidity"`
+	Name        string  `json:"name"`
+	Light       string  `json:"light"`
+	Temperature float64 `json:"temperature"`
+	Humidity    float64 `json:"humidity"`
 }
 
 //http://.../api/roomsへのpostに対して応答する関数
