@@ -9,7 +9,7 @@ import (
 
 	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 	"github.com/ubiquitous-signage/hamster/panel"
-	"gopkg.in/mgo.v2"
+	"github.com/ubiquitous-signage/hamster/util"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -151,11 +151,11 @@ func fetch() (panel.Panel, error) {
 	weather := &panel.Panel{
 		Contents: []interface{}{},
 	}
-	weather.Version = 0.0
-	weather.Type = "table"
-	weather.Title = *multiLanguageString.NewMultiLanguageString("東京の天気")
+	weather.Version  = 0.0
+	weather.Type     = "table"
+	weather.Title    = *multiLanguageString.NewMultiLanguageString("東京の天気")
 	weather.Category = "external"
-	weather.Date = time.Now()
+	weather.Date     = time.Now()
 	// for i, line := range neededInfo.TimeSeriesInfo.Items[0].Kind[0].Property.WeatherPart.Weather {
 	// 	symbol := *panel.NewImageContent("/static/images/weather/" + filename(line.Weather))
 	// 	text := *panel.NewStringContent(line.Weather)
@@ -186,19 +186,14 @@ func fetch() (panel.Panel, error) {
 }
 
 func Run() {
-	mongoSession, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		panic(err)
-	}
-	defer mongoSession.Close()
-
-	c := mongoSession.DB("ubiquitous-signage").C("panels")
+	session, collection := util.GetPanel()
+	defer session.Close()
 
 	for {
 		result, err := fetch()
 		if err == nil {
 			log.Println("Upsert weather")
-			c.Upsert(
+			collection.Upsert(
 				bson.M{
 					"version":  0.0,
 					"type":     "table",

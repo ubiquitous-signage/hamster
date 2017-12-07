@@ -21,5 +21,9 @@ $ dep ensure
 
 ## Run
 ```
-$ go run main.go
+production
+$ go run main.go -env=prod
+
+development(default)
+$ go run main.go -env=dev
 ```

@@ -6,22 +6,17 @@ import (
 
 	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 	"github.com/ubiquitous-signage/hamster/panel"
-	"gopkg.in/mgo.v2"
+	"github.com/ubiquitous-signage/hamster/util"
 	"gopkg.in/mgo.v2/bson"
 )
 
 func Run() {
-	mongoSession, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		panic(err)
-	}
-	defer mongoSession.Close()
-
-	c := mongoSession.DB("ubiquitous-signage").C("panels")
+	session, collection := util.GetPanel()
+	defer session.Close()
 
 	for {
 		log.Println("Upsert lectures")
-		c.Upsert(
+		collection.Upsert(
 			bson.M{
 				"version":  0.0,
 				"type":     "table",

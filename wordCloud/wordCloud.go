@@ -7,8 +7,8 @@ import (
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/spf13/viper"
-	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"github.com/ubiquitous-signage/hamster/util"
 )
 
 type WordCloud struct {
@@ -64,16 +64,12 @@ func PostWordCloud(w rest.ResponseWriter, r *rest.Request) {
 
 func storeWordCloud(newWordCloud WordCloud) {
 	//session initialize
-	mgoSession, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		panic(err)
-	}
-	defer mgoSession.Close()
-	c := mgoSession.DB("ubiquitous-signage").C("panels")
+	session, collection := util.GetPanel()
+	defer session.Close()
 
 	//update values
 	wordCloud := WordCloud{}
-	c.Find(bson.M{"type": "wordCloud"}).One(&wordCloud)
+	collection.Find(bson.M{"type": "wordCloud"}).One(&wordCloud)
 
 	words := wordCloud.Words
 	newWords := newWordCloud.Words
@@ -116,7 +112,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 	wordCloud.Category = fixedHeader["category"].(string)
 	wordCloud.Date = time.Now()
 
-	c.Upsert(
+	collection.Upsert(
 		mgoHeader,
 		wordCloud,
 	)

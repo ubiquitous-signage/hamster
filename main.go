@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+	"flag"
 
 	"github.com/ubiquitous-signage/hamster/lectures"
 	"github.com/ubiquitous-signage/hamster/newsletters"
@@ -14,6 +15,11 @@ import (
 )
 
 func main() {
+	var env string
+	flag.StringVar(&env, "env", "dev", "dev / prod")
+	flag.Parse()
+	go config.Run(env)
+
 	go server.Run()
 	go lectures.Run()
 	go newsletters.Run()
@@ -21,7 +27,6 @@ func main() {
 	go schedules.Run()
 	go trains.Run()
 	go weather.Run()
-	go config.Run()
 	for {
 		time.Sleep(1 * time.Second)
 	}
