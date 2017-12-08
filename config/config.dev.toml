@@ -6,7 +6,7 @@ endpoint = "http://localhost:8100"
 
 [mongo]
 endpoint = "localhost:27017"
-rootDBName = "ubiquitous-signage"
+DBName = "ubiquitous-signage"
 
 [wordCloud]
 thinOutThreshold = 40
