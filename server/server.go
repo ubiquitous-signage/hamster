@@ -4,23 +4,22 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/spf13/viper"
 	"github.com/ant0ine/go-json-rest/rest"
+	"github.com/spf13/viper"
 	"github.com/ubiquitous-signage/hamster/ads"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"github.com/ubiquitous-signage/hamster/rooms"
-	"github.com/ubiquitous-signage/hamster/wordCloud"
-	"github.com/ubiquitous-signage/hamster/buildings"
 	"github.com/ubiquitous-signage/hamster/util"
+	"github.com/ubiquitous-signage/hamster/wordCloud"
 	"gopkg.in/mgo.v2/bson"
 )
 
 func Run() {
 	//load vars
-	var mongoEndpoint string     = viper.GetString("mongo.endpoint")
-	var DBName string            = viper.GetString("mongo.rootDBName")
+	var mongoEndpoint string = viper.GetString("mongo.endpoint")
+	var DBName string = viper.GetString("mongo.rootDBName")
 	var chameleonEndpoint string = viper.GetString("chameleon.endpoint")
-	var ubiAdEndpoint string     = viper.GetString("ubiAd.endpoint")
+	var ubiAdEndpoint string = viper.GetString("ubiAd.endpoint")
 
 	mongoSession := util.Con(mongoEndpoint)
 	defer mongoSession.Close()
