@@ -16,11 +16,10 @@ import (
 
 func Run() {
 	//load vars
-	var mongoEndpoint string = viper.GetString("mongo.endpoint")
-	var DBName string = viper.GetString("mongo.rootDBName")
-	var chameleonEndpoint string = viper.GetString("chameleon.endpoint")
-	var ubiAdEndpoint string = viper.GetString("ubiAd.endpoint")
-
+	var mongoEndpoint = viper.GetString("mongo.endpoint")
+	var DBName = viper.GetString("mongo.rootDBName")
+	var chameleonEndpoint = viper.GetString("chameleon.endpoint")
+	var ubiAdEndpoint = viper.GetString("ubiAd.endpoint")
 	mongoSession := util.Con(mongoEndpoint)
 	defer mongoSession.Close()
 
