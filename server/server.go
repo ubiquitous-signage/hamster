@@ -17,7 +17,7 @@ import (
 func Run() {
 	//load vars
 	var mongoEndpoint = viper.GetString("mongo.endpoint")
-	var DBName = viper.GetString("mongo.rootDBName")
+	var DBName = viper.GetString("mongo.DBName")
 	var chameleonEndpoint = viper.GetString("chameleon.endpoint")
 	var ubiAdEndpoint = viper.GetString("ubiAd.endpoint")
 	mongoSession := util.Con(mongoEndpoint)
@@ -53,6 +53,7 @@ func Run() {
 			c.Find(nil).One(&result)
 			w.WriteJson(result)
 		}),
+		rest.Get("/rooms", rooms.GetRooms),
 		rest.Post("/ads", ads.PostAd),
 		rest.Post("/word-cloud", wordCloud.PostWordCloud),
 		rest.Post("/rooms", rooms.PostRooms),
