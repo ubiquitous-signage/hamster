@@ -49,6 +49,7 @@ func Run() {
 			c := mongoSession.DB(DBName).C("contexts")
 			result := struct {
 				Lang string `json:"lang"`
+				Id   int    `json:"id"`
 			}{}
 			c.Find(nil).One(&result)
 			w.WriteJson(result)
