@@ -64,3 +64,17 @@ func storeRoom(state RoomState) {
 
 	c.Upsert(bson.M{"name": state.Name}, room)
 }
+
+func GetRooms(w rest.ResponseWriter, r *rest.Request) {
+	mgoSession, err := mgo.Dial("localhost:27017")
+	defer mgoSession.Close()
+
+	if err != nil {
+		rest.Error(w, "Failed to connect DB", 500)
+		return
+	}
+	c := mgoSession.DB("ubiquitous-signage").C("rooms")
+	result := []bson.M{}
+	c.Find(nil).All(&result)
+	w.WriteJson(result)
+}
