@@ -18,16 +18,19 @@ func Run() {
 	//load vars
 	var mongoEndpoint = viper.GetString("mongo.endpoint")
 	var DBName = viper.GetString("mongo.DBName")
-	var chameleonEndpoint = viper.GetString("chameleon.endpoint")
-	var ubiAdEndpoint = viper.GetString("ubiAd.endpoint")
+	// var chameleonEndpoint = viper.GetString("chameleon.endpoint")
+	// var ubiAdEndpoint = viper.GetString("ubiAd.endpoint")
 	mongoSession := util.Con(mongoEndpoint)
 	defer mongoSession.Close()
 
 	api := rest.NewApi()
 	api.Use(rest.DefaultDevStack...)
 	api.Use(&rest.CorsMiddleware{
+		// OriginValidator: func(origin string, request *rest.Request) bool {
+		// 	return origin == chameleonEndpoint || origin == ubiAdEndpoint
+		// },
 		OriginValidator: func(origin string, request *rest.Request) bool {
-			return origin == chameleonEndpoint || origin == ubiAdEndpoint
+			return true
 		},
 		RejectNonCorsRequests:         false,
 		AllowedMethods:                []string{"GET", "POST"},
