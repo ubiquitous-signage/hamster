@@ -90,7 +90,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 		}
 	}
 
-	if len(words) > viper.GetInt("WordCloudConfig.thinOutThreshold") {
+	if len(words) > viper.GetInt("wordCloud.thinOutThreshold") {
 		words = words.thinOut(countIsOne)
 		log.Println("[Word-cloud] words are thinOuted!")
 	}
