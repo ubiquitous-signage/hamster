@@ -11,6 +11,7 @@ import (
 	"github.com/ubiquitous-signage/hamster/rooms"
 	"github.com/ubiquitous-signage/hamster/util"
 	"github.com/ubiquitous-signage/hamster/wordCloud"
+	"github.com/ubiquitous-signage/hamster/context"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -61,6 +62,7 @@ func Run() {
 		rest.Post("/ads", ads.PostAd),
 		rest.Post("/word-cloud", wordCloud.PostWordCloud),
 		rest.Post("/rooms", rooms.PostRooms),
+		rest.Post("/context", context.PostContext),
 	)
 
 	if err != nil {
