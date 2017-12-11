@@ -40,6 +40,6 @@ func Run() {
 				},
 			},
 		)
-		time.Sleep(2 * time.Second)
+		time.Sleep(80 * time.Second)
 	}
 }
