@@ -17,30 +17,30 @@ func Run() {
 	time.Sleep(startSecond * time.Second)
 
 	for {
-	session, collection := util.GetPanel()
-	defer session.Close()
+		session, collection := util.GetPanel()
+		defer session.Close()
 		log.Println("Upsert schedules")
 		collection.Upsert(
 			bson.M{
 				"version":  0.0,
 				"type":     "table",
-				"title.ja": "本日の予定",
+				"title.ja": "イベント",
 				"category": "internal",
 			},
 			panel.Panel{
 				PanelHeader: panel.PanelHeader{
 					Version:  0.0,
 					Type:     "table",
-					Title:    *multiLanguageString.NewMultiLanguageString("本日の予定"),
+					Title:    *multiLanguageString.NewMultiLanguageString("イベント"),
 					Category: "internal",
 					Date:     time.Now(),
 				},
 				Contents: [][]interface{}{{
-					*panel.NewStringContent("13:00"),
-					*panel.NewStringContent("T-Kernel講習会", true),
+					*panel.NewStringContent("12/16"),
+					*panel.NewStringContent("第2回　メディアと表現について考えるシンポジウム -「徹底検証　炎上リスク―そのジェンダー表現はアリか」", true),
 				}, {
-					*panel.NewStringContent("16:00"),
-					*panel.NewStringContent("〇〇先生講演会", true),
+					*panel.NewStringContent("12/15"),
+					*panel.NewStringContent("総合分析情報学コース 冬期入試出願締切", true),
 				}},
 			},
 		)
