@@ -17,8 +17,8 @@ func Run() {
 	time.Sleep(startSecond * time.Second)
 
 	for {
-	session, collection := util.GetPanel()
-	defer session.Close()
+		session, collection := util.GetPanel()
+		defer session.Close()
 
 		log.Println("Upsert lectures")
 		collection.Upsert(
@@ -39,14 +39,14 @@ func Run() {
 				Contents: [][]interface{}{{
 					*panel.NewImageContent("/static/images/lectures/noclass.png"),
 					*panel.NewStringContent("3限"),
-					*panel.NewStringContent("総合情報学特論XX", true),
+					*panel.NewStringContent("総合分析情報学特論V", true),
 				}, {
 					*panel.NewImageContent("/static/images/lectures/changed.png"),
-					*panel.NewStringContent("4限"),
-					*panel.NewStringContent("総合情報学基礎XV", true),
-					*panel.NewStringContent("301"),
+					*panel.NewStringContent("5限"),
+					*panel.NewStringContent("総合分析情報学研究法Ⅱ", true),
+					*panel.NewStringContent("306"),
 					*panel.NewStringContent("→"),
-					*panel.NewStringContent("405"),
+					*panel.NewStringContent("204"),
 				}},
 			},
 		)

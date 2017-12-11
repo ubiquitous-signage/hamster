@@ -17,8 +17,8 @@ func Run() {
 	time.Sleep(startSecond * time.Second)
 
 	for {
-	session, collection := util.GetPanel()
-	defer session.Close()
+		session, collection := util.GetPanel()
+		defer session.Close()
 		log.Println("Upsert newsletters")
 		collection.Upsert(
 			bson.M{
@@ -37,10 +37,7 @@ func Run() {
 				},
 				Contents: [][]interface{}{{
 					*panel.NewStringContent("越塚研究室"),
-					*panel.NewStringContent("サイネージ運用開始", true),
-				}, {
-					*panel.NewStringContent("暦本研究室"),
-					*panel.NewStringContent("当研究室D１の〇〇くんが〇〇デザインアワード受賞。", true),
+					*panel.NewStringContent("UTsignageのプロトタイプをTRONSHOWで展示します。", true),
 				}},
 			},
 		)
