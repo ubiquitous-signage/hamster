@@ -72,9 +72,8 @@ func fetch() (panel.Panel, error) {
 	trains.Date = time.Now()
 	for _, line := range trainInfomation {
 		symbol := *panel.NewImageContent("/static/images/metro/" + lineCharacter[line.OdptRailway] + ".jpg")
-		text := *panel.NewStringContent(line.OdptTrainInformationText)
-		date := *panel.NewStringContent("(" + line.DcDate.Format("15:04") + ")")
-		contentLine := []interface{}{symbol, text, date}
+		text := *panel.NewStringContent(line.OdptTrainInformationText+" ("+line.DcDate.Format("15:04")+")", true)
+		contentLine := []interface{}{symbol, text}
 		trains.Contents = append(trains.Contents.([]interface{}), contentLine)
 	}
 	return *trains, nil

@@ -32,10 +32,10 @@ func Run() {
 					Date:     time.Now(),
 				},
 				Contents: [][]interface{}{{
-					*panel.NewStringContent("研究計画書の提出について"),
+					*panel.NewStringContent("研究計画書の提出について", true),
 				},
 					{
-						*panel.NewStringContent("博士コロキウムの実施について"),
+						*panel.NewStringContent("博士コロキウムの実施について", true),
 					},
 				},
 			},

@@ -33,10 +33,10 @@ func Run() {
 				},
 				Contents: [][]interface{}{{
 					*panel.NewStringContent("13:00"),
-					*panel.NewStringContent("T-Kernel講習会"),
+					*panel.NewStringContent("T-Kernel講習会", true),
 				}, {
 					*panel.NewStringContent("16:00"),
-					*panel.NewStringContent("〇〇先生講演会"),
+					*panel.NewStringContent("〇〇先生講演会", true),
 				}},
 			},
 		)

@@ -34,11 +34,11 @@ func Run() {
 				Contents: [][]interface{}{{
 					*panel.NewImageContent("/static/images/lectures/noclass.png"),
 					*panel.NewStringContent("3限"),
-					*panel.NewStringContent("総合情報学特論XX"),
+					*panel.NewStringContent("総合情報学特論XX", true),
 				}, {
 					*panel.NewImageContent("/static/images/lectures/changed.png"),
 					*panel.NewStringContent("4限"),
-					*panel.NewStringContent("総合情報学基礎XV"),
+					*panel.NewStringContent("総合情報学基礎XV", true),
 					*panel.NewStringContent("301"),
 					*panel.NewStringContent("→"),
 					*panel.NewStringContent("405"),

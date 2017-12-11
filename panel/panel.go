@@ -29,10 +29,21 @@ func NewImageContent(payload string) *ImageContent {
 }
 
 type StringContent struct {
-	Type    string                                  `json:"type"`
-	Payload multiLanguageString.MultiLanguageString `json:"payload"`
+	Type       string                                  `json:"type"`
+	Payload    multiLanguageString.MultiLanguageString `json:"payload"`
+	Scrollable bool                                    `json:"scrollable"`
 }
 
-func NewStringContent(japanese string) *StringContent {
-	return &StringContent{Type: "String", Payload: *multiLanguageString.NewMultiLanguageString(japanese)}
+func NewStringContent(japanese string, options ...bool) *StringContent {
+	var scrollable bool
+	if len(options) > 0 {
+		scrollable = options[0]
+	} else {
+		scrollable = false
+	}
+	return &StringContent{
+		Type:       "String",
+		Payload:    *multiLanguageString.NewMultiLanguageString(japanese),
+		Scrollable: scrollable,
+	}
 }
