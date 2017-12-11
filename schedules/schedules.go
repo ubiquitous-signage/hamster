@@ -36,11 +36,11 @@ func Run() {
 					Date:     time.Now(),
 				},
 				Contents: [][]interface{}{{
-					*panel.NewStringContent("12/16"),
-					*panel.NewStringContent("第2回　メディアと表現について考えるシンポジウム -「徹底検証　炎上リスク―そのジェンダー表現はアリか」", true),
-				}, {
 					*panel.NewStringContent("12/15"),
 					*panel.NewStringContent("総合分析情報学コース 冬期入試出願締切", true),
+				}, {
+					*panel.NewStringContent("12/16"),
+					*panel.NewStringContent("第2回　メディアと表現について考えるシンポジウム -「徹底検証　炎上リスク―そのジェンダー表現はアリか」", true),
 				}},
 			},
 		)
