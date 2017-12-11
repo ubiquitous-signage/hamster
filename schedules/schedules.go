@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/spf13/viper"
 	"github.com/ubiquitous-signage/hamster/multiLanguageString"
 	"github.com/ubiquitous-signage/hamster/panel"
 	"github.com/ubiquitous-signage/hamster/util"
@@ -11,10 +12,13 @@ import (
 )
 
 func Run() {
-	session, collection := util.GetPanel()
-	defer session.Close()
+	var startSecond = viper.GetDuration("schedule.startDelaySecond")
+	var sleepSecond = viper.GetDuration("schedule.sleepSecond")
+	time.Sleep(startSecond * time.Second)
 
 	for {
+	session, collection := util.GetPanel()
+	defer session.Close()
 		log.Println("Upsert schedules")
 		collection.Upsert(
 			bson.M{
@@ -40,6 +44,6 @@ func Run() {
 				}},
 			},
 		)
-		time.Sleep(2 * time.Second)
+		time.Sleep(sleepSecond * time.Second)
 	}
 }

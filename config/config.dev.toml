@@ -10,3 +10,19 @@ DBName = "ubiquitous-signage"
 
 [wordCloud]
 thinOutThreshold = 40
+
+[schedule]
+startDelaySecond = 3
+sleepSecond = 60
+
+[portal]
+startDelaySecond = 6
+sleepSecond = 60
+
+[newsletter]
+startDelaySecond = 9
+sleepSecond = 60
+
+[lecture]
+startDelaySecond = 12
+sleepSecond = 60
