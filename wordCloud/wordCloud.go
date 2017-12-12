@@ -123,7 +123,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 		isEmerged := false
 		for i := 0; i < len(words); i++ {
 			if text == words[i].Text {
-				words[i].Count = math.Max(words[i].Count + 1, 5)
+				words[i].Count = math.Min(words[i].Count + 1, 5)
 				words[i].UpdatedAt = time.Now()
 				isEmerged = true
 				break
