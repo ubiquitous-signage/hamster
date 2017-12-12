@@ -4,11 +4,8 @@ import (
 	"log"
 	"net/http"
 	"time"
-<<<<<<< Updated upstream
 	"math"
-=======
 	"sort"
->>>>>>> Stashed changes
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/spf13/viper"
@@ -69,8 +66,8 @@ func (sl Words) thinOut(reductionCount int, f func(x Word) bool) []Word {
 }
 
 func Reduct(w Word) Word {
-	word.Count = int(math.Cbrt(float64(word.Count) - 0.1))
-	return word
+	w.Count = int(math.Cbrt(float64(w.Count) - 0.1))
+	return w
 }
 
 func countIsOne(word Word) bool {
