@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 	"time"
-	"math"
 	"math/rand"
+	"math"
 	"sort"
 
 	"github.com/ant0ine/go-json-rest/rest"
@@ -55,15 +55,15 @@ func (w Words) Less(i, j int) bool {
     return w[i].UpdatedAt.Before(w[j].UpdatedAt)
 }
 
-func (sl Words) thinOut(reductionCount int, f func(x Word) bool) []Word {
+func (sl Words) thinOut(reductionCount int, f func(x Word, th int) bool, th int) []Word {
 	result := make([]Word, 0, len(sl))
 	for _, word := range sl {
 		if reductionCount <= 0 {
-			if !f(word){
+			if !f(word, th){
 				word = Reduct(word)
 			}
 			result = append(result, word)
-		} else if !f(word) {
+		} else if !f(word, th) {
 			word = Reduct(word)
 			result = append(result, word)
 		} else {
@@ -75,12 +75,12 @@ func (sl Words) thinOut(reductionCount int, f func(x Word) bool) []Word {
 
 func Reduct(w Word) Word {
 	// w.Count = int(math.Cbrt(float64(w.Count)))
-	w.Count = w.Count * 0.9
+	w.Count = int(float64(w.Count) * 0.9)
 	return w
 }
 
-func countIsOne(word Word) bool {
-	return word.Count == 1
+func CountIsThreshold(w Word, th int) bool {
+	return w.Count == th
 }
 
 func PostWordCloud(w rest.ResponseWriter, r *rest.Request) {
@@ -132,7 +132,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 
 	if reductionCount > 0 {
 	  sort.Sort(words)
-		words = words.thinOut(reductionCount,countIsOne)
+		words = words.thinOut(reductionCount,CountIsThreshold,GetLeastCount(words))
 		log.Println("[Word-cloud] words are thinOuted!")
 	}
 
@@ -175,6 +175,16 @@ func GenRand() float64 {
 			return r
 		}
 	}
+}
+
+func GetLeastCount(ws Words) int {
+	min := math.MaxInt16
+	for _, w := range ws {
+		if min > w.Count {
+			min = w.Count
+		}
+	}
+	return min
 }
 
 func PrintWords(sl Words){
