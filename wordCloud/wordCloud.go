@@ -136,7 +136,8 @@ func storeWordCloud(newWordCloud WordCloud) {
 
 	reductionCount := len(words) - viper.GetInt("wordCloud.thinOutThreshold")
 
-	if reductionCount > 0 {
+	if true {
+	// if reductionCount > 0 {
 	  sort.Sort(words)
 		words = words.thinOut(reductionCount,CountIsThreshold, 1)
 		log.Println("[Word-cloud] words are thinOuted!")
