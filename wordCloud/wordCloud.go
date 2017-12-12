@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"math"
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/spf13/viper"
@@ -35,7 +36,7 @@ func (sl Words) thinOut(f func(x Word) bool) []Word {
 	result := make([]Word, 0, len(sl))
 	for _, word := range sl {
 		if !f(word) {
-			word.Count = int(float64(word.Count) * viper.GetFloat64("wordCloud.reductionRatio"))
+			word.Count = int(math.Cbrt(float64(word.Count) - 0.1))
 			result = append(result, word)
 		}
 	}
