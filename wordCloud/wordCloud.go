@@ -4,7 +4,11 @@ import (
 	"log"
 	"net/http"
 	"time"
+<<<<<<< Updated upstream
 	"math"
+=======
+	"sort"
+>>>>>>> Stashed changes
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/spf13/viper"
@@ -20,6 +24,7 @@ type WordCloud struct {
 type Word struct {
 	Text  string
 	Count int
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type Words []Word
@@ -32,15 +37,40 @@ type WordCloudHeader struct {
 	Date     time.Time `json:"date"`
 }
 
-func (sl Words) thinOut(f func(x Word) bool) []Word {
+func (w Words) Len() int {
+    return len(w)
+}
+
+func (w Words) Swap(i, j int) {
+    w[i], w[j] = w[j], w[i]
+}
+
+// less means early
+func (w Words) Less(i, j int) bool {
+    return w[i].UpdatedAt.Before(w[j].UpdatedAt)
+}
+
+func (sl Words) thinOut(reductionCount int, f func(x Word) bool) []Word {
 	result := make([]Word, 0, len(sl))
 	for _, word := range sl {
-		if !f(word) {
-			word.Count = int(math.Cbrt(float64(word.Count) - 0.1))
+		if reductionCount <= 0 {
+			if !f(word){
+				word = Reduct(word)
+			}
 			result = append(result, word)
+		} else if !f(word) {
+			word = Reduct(word)
+			result = append(result, word)
+		} else {
+			reductionCount = reductionCount - 1
 		}
 	}
 	return result
+}
+
+func Reduct(w Word) Word {
+	word.Count = int(math.Cbrt(float64(word.Count) - 0.1))
+	return word
 }
 
 func countIsOne(word Word) bool {
@@ -82,17 +112,21 @@ func storeWordCloud(newWordCloud WordCloud) {
 		for i := 0; i < len(words); i++ {
 			if text == words[i].Text {
 				words[i].Count = words[i].Count + 1
+				words[i].UpdatedAt = time.Now()
 				isEmerged = true
 				break
 			}
 		}
 		if !isEmerged {
-			words = append(words, Word{text, 1})
+			words = append(words, Word{text, 1, time.Now()})
 		}
 	}
 
-	if len(words) > viper.GetInt("wordCloud.thinOutThreshold") {
-		words = words.thinOut(countIsOne)
+	reductionCount := len(words) - viper.GetInt("wordCloud.thinOutThreshold")
+
+	if reductionCount > 0 {
+	  sort.Sort(words)
+		words = words.thinOut(reductionCount,countIsOne)
 		log.Println("[Word-cloud] words are thinOuted!")
 	}
 
@@ -117,4 +151,10 @@ func storeWordCloud(newWordCloud WordCloud) {
 		mgoHeader,
 		wordCloud,
 	)
+}
+
+func PrintWords(sl Words){
+	for _, i := range sl {
+		log.Println(i)
+	}
 }
