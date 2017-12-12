@@ -66,7 +66,7 @@ func (sl Words) thinOut(reductionCount int, f func(x Word) bool) []Word {
 }
 
 func Reduct(w Word) Word {
-	w.Count = int(math.Cbrt(float64(w.Count) - 0.1))
+	w.Count = int(math.Cbrt(float64(w.Count)))
 	return w
 }
 
