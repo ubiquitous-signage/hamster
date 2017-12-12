@@ -35,7 +35,7 @@ func (sl Words) thinOut(f func(x Word) bool) []Word {
 	result := make([]Word, 0, len(sl))
 	for _, word := range sl {
 		if !f(word) {
-			word.Count = word.Count - 1
+			word.Count = int(float64(word.Count) * viper.GetFloat64("wordCloud.reductionRatio"))
 			result = append(result, word)
 		}
 	}
