@@ -9,7 +9,7 @@ endpoint = "localhost:27017"
 DBName = "ubiquitous-signage"
 
 [wordCloud]
-thinOutThreshold = 70
+thinOutThreshold = 10
 reductionRatio = 0.4
 
 [schedule]
