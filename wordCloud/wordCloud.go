@@ -161,10 +161,19 @@ func storeWordCloud(newWordCloud WordCloud) {
 }
 
 func GenPosition() Position {
-	x := rand.NormFloat64() * 0.5 + 0.5
-	y := rand.NormFloat64() * 0.5 + 0.5
-	angle := rand.NormFloat64() * 0.5 + 0.5
+	x := GenRand()
+	y := GenRand()
+	angle := GenRand()
 	return Position{x, y, angle}
+}
+
+func GenRand() float64 {
+	for {
+		r := rand.NormFloat64() * 0.5 + 0.5
+		if 0<=r && r <= 1 {
+			return r
+		}
+	}
 }
 
 func PrintWords(sl Words){
