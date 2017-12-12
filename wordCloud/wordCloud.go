@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 	"math"
+	"math/rand"
 	"sort"
 
 	"github.com/ant0ine/go-json-rest/rest"
@@ -22,9 +23,15 @@ type Word struct {
 	Text  string
 	Count int
 	UpdatedAt time.Time `json:"updated_at"`
+	Position Position
 }
 
 type Words []Word
+
+type Position struct {
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+}
 
 type WordCloudHeader struct {
 	Version  float64   `json:"version"`
@@ -115,7 +122,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 			}
 		}
 		if !isEmerged {
-			words = append(words, Word{text, 1, time.Now()})
+			words = append(words, Word{text, 1, time.Now(), GetPosition()})
 		}
 	}
 
@@ -128,6 +135,8 @@ func storeWordCloud(newWordCloud WordCloud) {
 	}
 
 	wordCloud.Words = words
+
+	PrintWords(words)
 
 	//upsert preparation
 	fixedHeader := map[string]interface{}{
@@ -148,6 +157,12 @@ func storeWordCloud(newWordCloud WordCloud) {
 		mgoHeader,
 		wordCloud,
 	)
+}
+
+func GetPosition() Position {
+	x := rand.NormFloat64() * 0.5 + 0.5
+	y := rand.NormFloat64() * 0.5 + 0.5
+	return Position{x, y}
 }
 
 func PrintWords(sl Words){
