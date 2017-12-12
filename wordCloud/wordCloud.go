@@ -31,6 +31,7 @@ type Words []Word
 type Position struct {
 	X float64 `json:"x"`
 	Y float64 `json:"y"`
+	Angle float64 `json:"angle"`
 }
 
 type WordCloudHeader struct {
@@ -122,7 +123,7 @@ func storeWordCloud(newWordCloud WordCloud) {
 			}
 		}
 		if !isEmerged {
-			words = append(words, Word{text, 1, time.Now(), GetPosition()})
+			words = append(words, Word{text, 1, time.Now(), GenPosition()})
 		}
 	}
 
@@ -159,10 +160,11 @@ func storeWordCloud(newWordCloud WordCloud) {
 	)
 }
 
-func GetPosition() Position {
+func GenPosition() Position {
 	x := rand.NormFloat64() * 0.5 + 0.5
 	y := rand.NormFloat64() * 0.5 + 0.5
-	return Position{x, y}
+	angle := rand.NormFloat64() * 0.5 + 0.5
+	return Position{x, y, angle}
 }
 
 func PrintWords(sl Words){
