@@ -6,7 +6,7 @@ import (
 
 	"github.com/ant0ine/go-json-rest/rest"
 	"github.com/ubiquitous-signage/hamster/multiLanguageString"
-	"gopkg.in/mgo.v2"
+	"github.com/ubiquitous-signage/hamster/util"
 )
 
 type InputAd struct {
@@ -67,13 +67,9 @@ func PostAd(w rest.ResponseWriter, r *rest.Request) {
 }
 
 func insert(outputAd *OutputAd) error {
-	mongoSession, err := mgo.Dial("localhost:27017")
-	if err != nil {
-		panic(err)
-	}
-	defer mongoSession.Close()
+	//session initialize
+	session, collection := util.GetPanel()
+	defer session.Close()
 
-	c := mongoSession.DB("ubiquitous-signage").C("panels")
-
-	return c.Insert(outputAd)
+	return collection.Insert(outputAd)
 }
