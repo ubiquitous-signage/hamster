@@ -15,6 +15,7 @@ reductionRatio = 0.4
 [schedule]
 startDelaySecond = 3
 sleepSecond = 60
+calendarID = "members@gapps.sakamura-lab.org"
 
 [portal]
 startDelaySecond = 6
