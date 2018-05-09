@@ -120,7 +120,7 @@ func fetch() (panel.Panel, error) {
 
 	events, err := srv.Events.List(calendarID).ShowDeleted(false).SingleEvents(true).TimeMin(t_min).TimeMax(t_max).MaxResults(10).OrderBy("startTime").Do()
 	if err != nil {
-		log.Fatalf("Unable to retrieve next 10 of the user's events. %v", err)
+		log.Printf("Unable to retrieve next 10 of the user's events. %v", err)
 		return panel.Panel{}, err
 	}
 
